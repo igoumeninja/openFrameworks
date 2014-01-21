@@ -225,7 +225,7 @@ void ofAppGlutWindow::setupOpenGL(int w, int h, int screenMode){
 		glutInitDisplayString( displayString.c_str() );
 	}else{
 		if(bDoubleBuffered){  
-			glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA );
+			glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE | GLUT_DEPTH | GLUT_ALPHA );
 		}else{
 			glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE | GLUT_DEPTH | GLUT_ALPHA );
 		}
@@ -260,7 +260,7 @@ void ofAppGlutWindow::setupOpenGL(int w, int h, int screenMode){
 		if( displayString != ""){
 			glutInitDisplayString( displayString.c_str() );
 		}else{
-			glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA );
+			glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE | GLUT_DEPTH | GLUT_ALPHA );
 		}
 
     	// w x h, 32bit pixel depth, 60Hz refresh rate
@@ -642,12 +642,12 @@ void ofAppGlutWindow::display(void){
         if (nFramesSinceWindowResized < 3){
         	ofClear(bgPtr[0]*255,bgPtr[1]*255,bgPtr[2]*255, bgPtr[3]*255);
         } else {
-            if ( (ofGetFrameNum() < 3 || nFramesSinceWindowResized < 3) && bDoubleBuffered)    glutSwapBuffers();
+            if ( (ofGetFrameNum() < 3 || nFramesSinceWindowResized < 3) && bDoubleBuffered)    glFlush();
             else                                                     glFlush();
         }
     } else {
         if(bDoubleBuffered){
-			glutSwapBuffers();
+			glFlush();
 		} else{
 			glFlush();
 		}
@@ -660,7 +660,7 @@ void ofAppGlutWindow::display(void){
 			}
 		}
 		if(bDoubleBuffered){
-			glutSwapBuffers();
+			glFlush();
 		} else{
 			glFlush();
 		}
